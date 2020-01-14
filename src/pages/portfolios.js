@@ -3,49 +3,55 @@ import Layout from '../components/layouts/Layout'
 import { Row, Col, Card, CardBody } from "reactstrap"
 import Section from '../components/common/Section'
 import { useStaticQuery, graphql, Link } from 'gatsby'
-import { getFormattedDate } from "../components/vendors/utils"
 
-const Blog = () => {
+const Portfolios = () => {
 
   const data = useStaticQuery(graphql`query {
-    allMarkdownRemark{
+    allContentfulPortfolio (sort: {
+      fields: publishedDate
+      order: DESC
+    }) {
       edges {
         node {
           id
-          html
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
+          title
+          publishedDate(formatString: "MMMM Do, YYYY")
+          liveLink
+          slug
+          thumbnail {
             title
-            date
+            file {
+              url
+            }
           }
         }
       }
     }
   }`)
-
-  const { edges } = data.allMarkdownRemark
   
+
+  const { edges } = data.allContentfulPortfolio
+
+  console.log(JSON.stringify(data, null, 2))
+
   return (
     <Layout>
       <Section>
         <Row>
           <Col>
-            <h1>Blogs</h1>
+            <h1>Portfolios</h1>
             <Row>
-              {edges.map(({ node: { id, fields: {slug }, frontmatter: { title, date } } }) => {
-                
+              {edges.map(({ node: { id, title, publishedDate, slug } }) => {
+              
                 return (
                   <Col md={6} className="mb-4" key={id}>
                     <Card className="shadow-sm h-100">
                       <CardBody>
-                        <p className="mb-0">{getFormattedDate(date)}</p>
-                        <Link to={`/blogs/${slug}`} className="text-body">
+                        <p className="mb-0">{publishedDate}</p>
+                        <Link to={`/portfolios/${slug}`} className="text-body">
                           <h3>{title}</h3>
                         </Link>
-                        <Link to={`/blogs/${slug}`}>
+                        <Link to={`/portfolios/${slug}`}>
                           Read more
                           <span className="d-inline-block ml-1">⟶</span>
                         </Link>
@@ -62,4 +68,4 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default Portfolios

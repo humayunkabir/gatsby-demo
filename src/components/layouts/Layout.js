@@ -1,7 +1,7 @@
 import React from 'react'
 import SiteNavbar from '../navbar/SiteNavbar'
 import Footer from '../footer/Footer'
-import '../plugins/fa'
+import '../vendors/fa'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../scss/style.scss'

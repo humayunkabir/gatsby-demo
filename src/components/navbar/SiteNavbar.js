@@ -39,6 +39,9 @@ const SiteNavbar = () => {
               <NavLink activeClassName="active" tag={Link} to="/blogs">Blogs</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink activeClassName="active" tag={Link} to="/portfolios">Portfolios</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink activeClassName="active" tag={Link} to="/contact">Contact</NavLink>
             </NavItem>
           </Nav>

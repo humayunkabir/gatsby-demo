@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout'
 import Section from '../common/Section'
 import { Row, Col, Media, Card, CardBody } from "reactstrap"
 import { graphql, Link } from "gatsby"
+import { blog } from './blog.mudule.scss';
+import { getFormattedDate } from "../vendors/utils"
 
 export const query = graphql`query (
   $slug: String!
@@ -28,19 +30,14 @@ export const query = graphql`query (
 }`
 
 const Blog = ({ data, uri }) => {
-
   const { markdownRemark: { html, timeToRead, frontmatter: { title, author, date, authorImage: { publicURL } } } } = data
-
-  const newDate = new Date(date)
-  const formattedDate = newDate.toLocaleString('default', { month: 'long', day: '2-digit', year: 'numeric' })
-
   return (
     <Layout>
-      <Section>
+      <Section className={blog}>
         <Row className="justify-content-center">
           <Col style={{ maxWidth: 750 }}>
             <div className="text-center mt-5">
-              <p className="mb-0">{formattedDate}</p>
+              <p className="mb-0">{getFormattedDate(date)}</p>
               <h2>{title}</h2>
               <p>
                 <Link to={`${uri}#author`} className="text-body">{author}</Link> &bull; {timeToRead}min read

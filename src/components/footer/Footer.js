@@ -3,6 +3,8 @@ import { Container, Row, Col } from 'reactstrap'
 import { graphql, useStaticQuery } from 'gatsby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import { footer } from './footer.module.scss'
+
 const Footer = () => {
   const data = useStaticQuery(graphql`query {
     site {
@@ -16,7 +18,7 @@ const Footer = () => {
   const { author, email } = data.site.siteMetadata
 
   return (
-    <footer>
+    <footer className={footer}>
       <Container>
         <Row>
           <Col>
