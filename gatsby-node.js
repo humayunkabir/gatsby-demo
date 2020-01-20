@@ -10,51 +10,78 @@ module.exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  // const blogTemplate = path.resolve('./src/components/templates/Blog.js')
-  // const response = await graphql(`query {
-  //   allMarkdownRemark{
-  //     edges {
-  //       node {
-  //         fields {
-  //           slug
-  //         }
-  //       }
-  //     }
-  //   }
-  // }`)
+  //-----------
+  // Blogs
+  //-----------
+  const blogTemplate = path.resolve('./src/components/templates/Blog.js')
+  const response = await graphql(`query {
+    allMarkdownRemark{
+      edges {
+        node {
+          fields {
+            slug
+          }
+        }
+      }
+    }
+  }`)
 
-  // response.data.allMarkdownRemark.edges.forEach(({ node: { fields: { slug } } }) => {
-  //   createPage({
-  //     component: blogTemplate,
-  //     path: `/blogs/${slug}`,
-  //     context: { slug }
-  //   })
-  // })
+  response.data.allMarkdownRemark.edges.forEach(({ node: { fields: { slug } } }) => {
+    createPage({
+      component: blogTemplate,
+      path: `/blogs/${slug}`,
+      context: { slug }
+    })
+  })
   
   //-----------
   // Portfolios
   //-----------
   const portfolioTemplate = path.resolve('./src/components/templates/Portfolio.js');
   
-  const portfoliosResponse = await graphql`query {
-    allContentfulPortfolio {
-      edges {
-        node {
-          slug
-        }
+  // const portfoliosResponse = await graphql`query {
+  //   allContentfulPortfolio {
+  //     edges {
+  //       node{
+  //         slug
+  //       }
+  //     }
+  //   }
+  // }`;
+  
+  const portfoliosResponse = {
+    "data": {
+      "allContentfulPortfolio": {
+        "edges": [
+          {
+            "node": {
+              "slug": "sparrow-simple-seamless-alive"
+            }
+          },
+          {
+            "node": {
+              "slug": "falcon-admin-dashboard-webapp-template"
+            }
+          },
+          {
+            "node": {
+              "slug": "falcon-admin-dashboard-webapp-template-react"
+            }
+          }
+        ]
       }
     }
-  }`;
+  }
   
-  console.log(JSON.stringify(portfoliosResponse, null, 2))
+  console.log(portfoliosResponse);
   
-  // portfoliosResponse.data.allContentfulPortfolio.edges.forEach(({ node: { slug } }) => {
-  //   console.log(portfolioTemplate)
-  //   console.log(slug)
-  //   createPage({
-  //     component: portfolioTemplate,
-  //     path: `/portfolios/${slug}`,
-  //     context: { slug }
-  //   })
-  // })
+  portfoliosResponse.data.allContentfulPortfolio.edges.forEach(({ node: { slug } }) => {
+    console.log(portfolioTemplate)
+    console.log(slug)
+    createPage({
+      component: portfolioTemplate,
+      path: `/portfolios/${slug}`,
+      context: { slug }
+    })
+  })
 }

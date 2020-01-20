@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from '../components/layouts/Layout'
-import { Row, Col, Card, CardBody } from "reactstrap"
+import { Row, Col, Media } from "reactstrap"
 import Section from '../components/common/Section'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 
@@ -29,39 +29,37 @@ const Portfolios = () => {
     }
   }`)
   
-
   const { edges } = data.allContentfulPortfolio
-
-  console.log(JSON.stringify(data, null, 2))
 
   return (
     <Layout>
       <Section>
-        <Row>
-          <Col>
+        <Row className="justify-content-center align-items-center">
+          <Col xs="auto">
             <h1>Portfolios</h1>
-            <Row>
-              {edges.map(({ node: { id, title, publishedDate, slug } }) => {
-              
-                return (
-                  <Col md={6} className="mb-4" key={id}>
-                    <Card className="shadow-sm h-100">
-                      <CardBody>
-                        <p className="mb-0">{publishedDate}</p>
-                        <Link to={`/portfolios/${slug}`} className="text-body">
-                          <h3>{title}</h3>
-                        </Link>
-                        <Link to={`/portfolios/${slug}`}>
-                          Read more
-                          <span className="d-inline-block ml-1">⟶</span>
-                        </Link>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                )
-              })}
-            </Row>
           </Col>
+        </Row>
+      </Section>
+      <Section>
+        <Row>
+          {edges.map(({ node: { id, title, publishedDate, slug, thumbnail } }) => {
+            return (
+              <Col md={6} className="mb-4" key={id}>
+                <Media className="shadow-sm h-100 align-items-center p-3 bg-white rounded-lg">
+                  <img src={thumbnail.file.url} alt={thumbnail.title} width={150} className="img-thumbnail mr-3" />
+                  <Media body>
+                    <p className="mb-0">{publishedDate}</p>
+                    <h4>{title}</h4>
+                    
+                    <Link to={`/portfolios/${slug}`} className="stretched-link">
+                      Read more
+                      <span className="d-inline-block ml-1">⟶</span>
+                    </Link>
+                  </Media>
+                </Media>
+              </Col>
+            )
+          })}
         </Row>
       </Section>
     </Layout>

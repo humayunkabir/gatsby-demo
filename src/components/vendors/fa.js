@@ -3,13 +3,14 @@ import {
   faTwitter,
   faGithub,
   faGitlab,
-  faBitbucket
+  faBitbucket,
 } from '@fortawesome/free-brands-svg-icons'
 
 import {
   faCheckSquare,
   faCoffee,
-  faEnvelope
+  faEnvelope,
+  faHome
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -17,7 +18,8 @@ library.add(
   faTwitter,
   faGithub,
   faGitlab,
-  faBitbucket, 
+  faBitbucket,
+  faHome,
   
   // Solid
   faCheckSquare,
